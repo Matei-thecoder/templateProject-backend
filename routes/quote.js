@@ -63,7 +63,7 @@ router.post('/sendemail/:id', async(req,res)=>{
     try{
         const getEmail = await pool.query(`SELECT * FROM users.quotes WHERE "ID"=${id}`);
         try{
-            sendMail(getEmail.rows[0].Email, getEmail.rows[0].Manufacturer, getEmail.rows[0].Model, getEmail.rows[0].Faults, getEmail.rows[0].Comments, fee );
+            sendMail(getEmail.rows[0].Email, getEmail.rows[0].Manufacturer, getEmail.rows[0].Model, getEmail.rows[0].Fault, getEmail.rows[0].Comments, fee );
             res.status(201).send('Email send successfully');
         }
 

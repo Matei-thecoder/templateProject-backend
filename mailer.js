@@ -2,16 +2,12 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmx.com", // Mail.com SMTP server
-    port: 465, // Use 465 for SSL or 587 for TLS
-    secure: true, // false for TLS, true for SSL (465)
+    service:"yahoo",
     auth: {
       user: process.env.EMAIL_USER, // Your Mail.com email address
       pass: process.env.EMAIL_PASSWORD, // Your Mail.com email password
     },
-    tls: {
-        rejectUnauthorized: false, // Bypass potential TLS issues
-      },
+    
   });
   
 
