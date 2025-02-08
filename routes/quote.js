@@ -23,7 +23,7 @@ router.get('/all', async (req, res) => {
 
 router.post('/add',async(req,res)=>{
     try{
-        const {NrOfRepairs, Manufacturer,Model,Fault, MoreFault, Comments, Name, Email, 
+        /*const {NrOfRepairs, Manufacturer,Model,Fault, MoreFault, Comments, Name, Email, 
         Phone, Country,RepairCenter} = req.body;
         const id = 1;
         //verificarea pt existenta a variabilelor de facut in frontend
@@ -33,7 +33,30 @@ router.post('/add',async(req,res)=>{
             [NrOfRepairs, Manufacturer,Model,Fault,MoreFault,Comments,Name,Email,Phone,Country,RepairCenter]
         );
 
-        res.status(201).json(result.rows[0]); // Return the new user
+        res.status(201).json(result.rows[0]); // Return the new user*/
+        const { quotes } = req.body;
+
+        if (!quotes || !Array.isArray(quotes)) {
+            return res.status(400).json({ error: "Invalid input format" });
+        }
+
+        const query = `
+            INSERT INTO users.quotes ("Noofrepairs","Manufacturer", "Model", "Fault", "MoreFaults", "Comments", "Name", "Email", "Phone", "Country", "RepairCenterLocation")
+            VALUES (0,$1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+            RETURNING "ID";
+        `;
+
+        const insertedIds = [];
+        for (const quote of quotes) {
+            const values = [
+                quote.Manufacturer, quote.Model, quote.Fault, quote.MoreFault,
+                quote.Comments, quote.Name, quote.Email, quote.Phone, quote.Country, quote.RepairCenter
+            ];
+            const result = await pool.query(query, values);
+            insertedIds.push(result.rows[0].ID);
+        }
+
+        res.status(201).json({ message: "Forms submitted successfully", ids: insertedIds });
 
     }
     catch(err)
