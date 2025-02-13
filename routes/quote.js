@@ -50,7 +50,7 @@ router.post('/add',async(req,res)=>{
         for (const quote of quotes) {
             const values = [
                 quote.Manufacturer, quote.Model, quote.Fault, quote.MoreFault,
-                quote.Comments, quote.Name, quote.Email, quote.Phone, quote.Country, quote.RepairCenter
+                quote.Comments, quote.Name, quote.Email, quote.Phone, quote.Country, quote.RepairCenterLocation
             ];
             const result = await pool.query(query, values);
             insertedIds.push(result.rows[0].ID);

@@ -12,10 +12,11 @@ app.use(express.json()); // For parsing JSON
 // Import Routes
 const indexRoutes = require('./routes/index');
 const quotesRoutes = require('./routes/quote');
-
+const authRoutes = require('./routes/auth')
 // Use Routes
 app.use('/', indexRoutes);
 app.use('/quotes', quotesRoutes);
+app.use('/auth',authRoutes);
 
 //test connection to db
 
